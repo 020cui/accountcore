@@ -2,7 +2,7 @@
 odoo.define('accountcore.accountcoreListRenderer', function (require) {
     "use strict";
     var ListRenderer = require('web.ListRenderer');
-
+    var framework = require("web.framework");
     ListRenderer.include({
         events: _.extend({}, ListRenderer.prototype.events, {
             'change table td.voucher_d_amount': '_entryamountChange',
@@ -1299,10 +1299,12 @@ odoo.define('accountcore.myjexcel', ['web.AbstractField', 'web.field_registry', 
                                         return
                                     }
                                 jexcel.current.options.computing = !jexcel.current.options.computing;
+                                framework.blockUI();
                                 self.startDate = startDate;
                                 self.endDate = endDate;
                                 self.orgIds = self._getOrgIds();
                                 self._compute();
+                                framework.unblockUI,
                             }else{
                                 self.do_warn("期间不正确")
                             }
